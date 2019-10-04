@@ -3,7 +3,7 @@
 \name{get_tokens_from_valueset}
 \alias{get_tokens_from_valueset}
 \title{Get list of tokens for a list of valuesets
-Tokens: all unique lowercase, stripped of punctuation, split at single spaces words}
+Tokens: all unique lowercase, split at single spaces words}
 \usage{
 get_tokens_from_valueset(valueset_list)
 }
@@ -12,5 +12,5 @@ get_tokens_from_valueset(valueset_list)
 }
 \description{
 Get list of tokens for a list of valuesets
-Tokens: all unique lowercase, stripped of punctuation, split at single spaces words
+Tokens: all unique lowercase, split at single spaces words
 }
