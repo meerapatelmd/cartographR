@@ -8,6 +8,5 @@ get_corpus_from_tokens_list <-
                 data.frame(
                         corpus = unlist(tokens_list)) %>%
                         dplyr::group_by(corpus) %>%
-                        dplyr::summarise(frequency = length(corpus)) %>%
-                        dplyr::summarise(nchar = nchar(corpus))
+                        dplyr::summarise(frequency = length(corpus)) 
         }
