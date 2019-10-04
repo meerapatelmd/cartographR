@@ -6,13 +6,12 @@
 #' @importFrom dplyr distinct
 #' @export
 get_valueset <-
-        function(dataframe, value_variable, major_id_variable, ...) {
+        function(dataframe, id_variable, value_variable) {
                 value_variable    <- enquo(value_variable)
-                major_id_variable <- enquo(major_id_variable)
-                id_variables <- enquos(...)
+                id_variable <- enquo(id_variable)
                 
                 list <- split_dataframe_by_identifier(dataframe %>%
-                                                         dplyr::select(!!major_id_variable, !!!id_variables, !!value_variable), !!major_id_variable)
+                                                         dplyr::select(!!id_variable,!!value_variable), !!id_variable)
                 output <- list()
                 for (i in 1:length(list)) {
                         output[[i]] <- list[[i]] %>%
@@ -20,4 +19,5 @@ get_valueset <-
                                                 dplyr::distinct() %>%
                                                 unlist()
                 }
+                return(output)
         }

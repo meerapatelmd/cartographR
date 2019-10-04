@@ -4,7 +4,7 @@
 \alias{get_valueset}
 \title{Returns the unique values for a given value field in a list}
 \usage{
-get_valueset(dataframe, value_variable, major_id_variable, ...)
+get_valueset(dataframe, id_variable, value_variable)
 }
 \arguments{
 \item{value_variable}{column containing the value}
