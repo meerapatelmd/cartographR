@@ -19,5 +19,6 @@ get_valueset <-
                                                 dplyr::distinct() %>%
                                                 unlist()
                 }
+                names(output) <- names(list)
                 return(output)
         }
