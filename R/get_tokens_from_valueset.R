@@ -11,5 +11,6 @@ get_tokens_from_valueset <-
                         valueset <- valueset_list[[i]]
                         output[[i]] <- unique(tolower(unlist(strsplit(paste(valueset), split = " "))))
                 }
+                names(output) <- names(valueset_list)
                 return(output)
         }
