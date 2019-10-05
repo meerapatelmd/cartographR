@@ -17,6 +17,7 @@ get_valueset <-
                         output[[i]] <- list[[i]] %>%
                                                 dplyr::select(!!value_variable) %>%
                                                 dplyr::distinct() %>%
+                                                dplyr::rename_all(paste0, "_VALUESET")
                                                 unlist()
                 }
                 names(output) <- names(list)
