@@ -10,8 +10,8 @@ get_valueset <-
                 value_variable    <- enquo(value_variable)
                 id_variable <- enquo(id_variable)
                 
-                list <- split_dataframe_by_identifier(dataframe %>%
-                                                         dplyr::select(!!id_variable,!!value_variable), !!id_variable)
+                list <- split_dataframe_by_identifier(dataframe, !!id_variable)
+                
                 output <- list()
                 for (i in 1:length(list)) {
                         output[[i]] <- list[[i]] %>%
