@@ -9,8 +9,14 @@ get_tokens_from_valueset <-
                 output <- list()
                 for (i in 1:length(valueset_list)) {
                         valueset <- valueset_list[[i]]
-                        output[[i]] <- unique(unlist(strsplit(paste(valueset), split = " ")))
-                        names(output[[i]]) <- paste0(names(output[[i]]), "_TOKENS")
+                        valueset_names <- names(valueset)
+                        
+                        output[[i]] <- unique(unlist(valueset))
+                        names(output[[i]]) <- paste0(valueset_names, "_TOKENS")
+                        
+                        output[[i]] <- unlist(strsplit(output[[i]], split = " "))
+                        output[[i]] <- output[[i]][!(duplicated(output[[i]]))]
+                        
                 }
                 names(output) <- names(valueset_list)
                 return(output)
