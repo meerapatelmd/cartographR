@@ -1,16 +1,11 @@
 #' Generate the final corpus of words for the data
 #' @param valueset_output output from get_valueset_function
 #' @param token_output output from get_tokens function
-#' @importFrom somersaulteR call_mr_clean
-#' @importFrom somersaulteR mutate_all_na_to_blank
-#' @importFrom tidyr separate
+#' @importFrom magrittr %>%
+#' @import dplyr
+#' @import tidyr
+#' @import somersaulteR
 #' @importFrom caterpillaR delete_phrase_from_string
-#' @importFrom dplyr mutate
-#' @importFrom dplyr filter
-#' @importFrom dplyr group_by
-#' @importFrom dplyr ungroup
-#' @importFrom dplyr arrange
-#' @importFrom dplyr summarize
 #' @export
 #' 
 generate_corpus <-
@@ -33,17 +28,19 @@ generate_corpus <-
                 
                 output <-
                         output %>%
-                        tidyr::separate(col = CORPUS_SUB_LABEL, into = c("BLANK_01", "CORPUS_VALUESET", "CORPUS_TOKEN"),
+                        tidyr::separate(col = CORPUS_SUB_LABEL, into = c("BLANK_01", "CORPUS_VALUESET_LABEL", "CORPUS_TOKEN_LABEL"),
                                  sep = "_", remove = TRUE)
                 
                 output$BLANK_01 <- NULL
                 
                 output <-
                         output %>%
-                        dplyr::mutate(CORPUS_VALUESET_COUNT = str_remove_all(CORPUS_VALUESET, "[^0-9]")) %>%
-                        dplyr::mutate(CORPUS_TOKEN_COUNT = str_remove_all(CORPUS_TOKEN, "[^0-9]")) %>%
+                        dplyr::mutate(CORPUS_VALUESET_NUMBER = str_remove_all(CORPUS_VALUESET_LABEL, "[^0-9]")) %>%
+                        dplyr::mutate(CORPUS_TOKEN_NUMBER = str_remove_all(CORPUS_TOKEN_LABEL, "[^0-9]")) %>%
                         somersaulteR::mutate_all_na_to_blank() %>%
-                        dplyr::filter(CORPUS_VALUE != "")
+                        dplyr::mutate_at(vars(CORPUS_VALUESET_NUMBER, CORPUS_TOKEN_NUMBER), list(~ifelse(. == "", "0", .))) %>%
+                        dplyr::mutate_at(vars(CORPUS_VALUESET_NUMBER, CORPUS_TOKEN_NUMBER), list(~as.integer(.)+1))
+
                 
                 output <-
                 left_join(output,
@@ -51,8 +48,10 @@ generate_corpus <-
                                   dplyr::group_by(CORPUS_VALUE) %>%
                                   dplyr::summarize(CORPUS_VALUE_FREQUENCY = length(CORPUS_VALUE)) %>%
                                   dplyr::ungroup()) %>%
-                        dplyr::arrange(desc(CORPUS_VALUE_FREQUENCY))
-                
+                        dplyr::arrange(desc(CORPUS_VALUE_FREQUENCY)) %>%
+                        tidyr::unite(CORPUS_TYPE, CORPUS_VALUESET_LABEL, CORPUS_TOKEN_LABEL, sep = " ", remove = FALSE) %>%
+                        somersaulteR::call_mr_clean() %>%
+                        dplyr::mutate(CORPUS_TYPE = stringr::str_remove_all(CORPUS_TYPE, "[0-9]"))
                 
                 return(output)
                        
