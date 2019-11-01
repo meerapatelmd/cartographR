@@ -18,7 +18,8 @@ identity_from_gs <-
                  keep_all_cols = FALSE,
                  dont_trimws = FALSE,
                  remove_all = "\t|\n",
-                 include_duplicates = FALSE) {
+                 include_duplicates = FALSE,
+                 log = TRUE) {
                 
                 IDENTITY_TARGET_COLS <- target_cols
                 IDENTITY_00 <- mirCat::gs_read_tmp_csv(gsheet_name, tab = gsheet_tab) %>%
