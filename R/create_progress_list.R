@@ -1,12 +1,14 @@
 #' Takes IDENTITY and KEY and creates a PROGRESS LIST based on the status of the concept
 #' @param identity output from identity functions
 #' @param key output from key functions
+#' @param filter_out_blank_concepts filters out key_concept_name == ""
 #' @import dplyr
 #' @export
 
 create_progress_list <-
         function(identity,
-                 key) {
+                 key,
+                 filter_out_blank_concepts = TRUE) {
                 
                 MAP_IN_PROGRESS <-
                         dplyr::left_join(identity,
@@ -50,6 +52,13 @@ create_progress_list <-
                         PROGRESS_LIST$QUEUE %>%
                         dplyr::arrange(IDENTITY_ID, KEY_FIELD)
                 
+                if (filter_out_blank_concepts == TRUE) {
+                        for (i in 1:length(PROGRESS_LIST)) {
+                                PROGRESS_LIST[[i]] <-
+                                        PROGRESS_LIST[[i]] %>%
+                                        dplyr::filter(KEY_CONCEPT_NAME != "")
+                        }
+                }
                 return(PROGRESS_LIST)
                 
         }
