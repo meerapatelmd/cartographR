@@ -6,7 +6,7 @@
 \usage{
 identity_from_gs(gsheet_name, gsheet_tab, target_cols,
   keep_all_cols = FALSE, dont_trimws = FALSE, remove_all = "\\t|\\n",
-  include_duplicates = FALSE)
+  include_duplicates = FALSE, log = TRUE)
 }
 \arguments{
 \item{gsheet_name}{exact name of the Google Sheet that has the IDENTITY table. If there are more than 1 Google Sheets with this name, an error will be returned. An "IDENTITY_ID" column is required.}

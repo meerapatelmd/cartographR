@@ -4,12 +4,14 @@
 \alias{create_progress_list}
 \title{Takes IDENTITY and KEY and creates a PROGRESS LIST based on the status of the concept}
 \usage{
-create_progress_list(identity, key)
+create_progress_list(identity, key, filter_out_blank_concepts = TRUE)
 }
 \arguments{
 \item{identity}{output from identity functions}
 
 \item{key}{output from key functions}
+
+\item{filter_out_blank_concepts}{filters out key_concept_name == ""}
 }
 \description{
 Takes IDENTITY and KEY and creates a PROGRESS LIST based on the status of the concept

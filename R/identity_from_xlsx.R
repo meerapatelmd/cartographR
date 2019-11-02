@@ -23,7 +23,8 @@ identity_from_xlsx <-
                  log = TRUE) {
                 
                 IDENTITY_TARGET_COLS <- target_cols
-                IDENTITY_00 <- readxl::read_excel(path_to_identity, sheet = tab, col_types = readr::cols(.default = "c"))
+                IDENTITY_00 <- readxl::read_excel(path_to_identity, sheet = tab) %>%
+                                        somersaulteR::call_mr_clean()
                 
                 if (keep_all_cols == TRUE) {
                         IDENTITY_01 <- IDENTITY_01
