@@ -24,7 +24,8 @@ identity_from_xlsx <-
                 
                 IDENTITY_TARGET_COLS <- target_cols
                 IDENTITY_00 <- readxl::read_excel(path_to_identity, sheet = tab) %>%
-                                        somersaulteR::call_mr_clean()
+                                        somersaulteR::call_mr_clean() %>%
+                                        dplyr::mutate_all(na_if, "NA")
                 
                 if (keep_all_cols == TRUE) {
                         IDENTITY_01 <- IDENTITY_01
