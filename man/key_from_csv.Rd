@@ -11,7 +11,7 @@ key_from_csv(path_to_key, tab = 1, log = TRUE)
 \arguments{
 \item{path_to_key}{full file path to key csv file}
 
-\item{log}{TRUE if mirCat::log functions will be used to log this event}
+\item{log}{TRUE if this event will be logged using the log functions from the mirCat package}
 
 \item{path_to_key}{full file path to key csv file}
 

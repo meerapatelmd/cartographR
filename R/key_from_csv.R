@@ -1,6 +1,6 @@
 #' Gets KEY data and cleans up based on parameters
 #' @param path_to_key full file path to key csv file
-#' @param log TRUE if mirCat::log functions will be used to log this event
+#' @param log TRUE if this event will be logged using the log functions from the mirCat package
 #' @import mirCat
 #' @import somersaulteR
 #' @import dplyr
