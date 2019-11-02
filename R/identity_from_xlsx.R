@@ -23,7 +23,7 @@ identity_from_xlsx <-
                  log = TRUE) {
                 
                 IDENTITY_TARGET_COLS <- target_cols
-                IDENTITY_00 <- readxl::read_excel(path_to_identity, sheet = tab) %>%
+                IDENTITY_00 <- readxl::read_excel(path_to_identity, sheet = tab, col_types = "text") %>%
                                         somersaulteR::call_mr_clean() %>%
                                         dplyr::mutate_all(na_if, "NA")
                 
