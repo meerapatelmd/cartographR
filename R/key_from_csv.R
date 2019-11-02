@@ -29,7 +29,6 @@ key_from_csv <-
                                             project_log_fn = basename(path_to_key),
                                             project_log_fn_md5sum = tools::md5sum(basename(path_to_key)),
                                             project_log_load_timestamp = mirroR::get_timestamp()
-                                            ,
                                             #project_log_gsheet_title = gsheet_name,
                                             #project_log_gsheet_tab_name = gsheet_tab,
                                             #project_log_gsheet_key = mirCat::gs_id_from_name(gsheet_name)
