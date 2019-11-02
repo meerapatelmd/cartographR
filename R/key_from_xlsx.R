@@ -8,7 +8,7 @@
 #' @importFrom lubridate ymd_hms
 #' @export
 
-key_from_csv <-
+key_from_xlsx <-
         function(path_to_key, 
                  tab = 1,
                  log = TRUE) {
