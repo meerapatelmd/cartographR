@@ -15,7 +15,7 @@ key_from_csv <-
                 KEY_00 <- readr::read_csv(path_to_key, col_types = readr::cols(.default = "c"))
                 
                 KEY_01 <-
-                        KEY_01 %>%
+                        KEY_00 %>%
                         dplyr::mutate(KEY_TIMESTAMP = lubridate::ymd_hms(KEY_TIMESTAMP)) %>%
                         dplyr::mutate(KEY_FIELD = str_replace_all(KEY_FIELD, "^PERMISSIBLE_VALUE_LABEL$", "KMI_PERMISSIBLE_VALUE_LABEL")) %>%
                         dplyr::group_by(IDENTITY_ID, KEY_FIELD, KEY_CONCEPT_NAME) %>%
