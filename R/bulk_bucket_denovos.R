@@ -16,10 +16,12 @@ bulk_bucket_denovos <-
                 x <- x %>%
                         dplyr::mutate(KEY_DENOVO_CUI_JUSTIFICATION = bulk_denovo_cui_justification) %>%
                         dplyr::mutate(KEY_TIMESTAMP = mirroR::get_timestamp()) %>%
+                        dplyr::mutate(DENOVO_BUCKET = bucket)
                         somersaulteR::call_mr_clean()
                 
                 if (!(exists("DENOVO_CUI", envir = globalenv()))) {
-                        y <- dplyr::bind_rows(progress_list)
+                        y <- dplyr::bind_rows(progress_list) %>%
+                                dplyr::mutate(DENOVO_BUCKET = "")
                         y <- y[-(1:nrow(x)),]
                         DENOVO_CUI <- dplyr::bind_rows(y,
                                                        x)
