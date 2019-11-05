@@ -17,7 +17,7 @@ interactive_single_term_search <-
                         print(progress_list$QUEUE[1,])
                         
                         x <- readline("What is the new search term? `S` to skip. ")
-                        if (x != "S"|x != "s") {
+                        if (!(x %in% c("S", "s", ""))) {
                                 first_match <- get_first_possible_cui(x)
                                 if (nrow(first_match) == 1) {
                                         progress_list$QUEUE$KEY_CUI[1] <- first_match$CUI
