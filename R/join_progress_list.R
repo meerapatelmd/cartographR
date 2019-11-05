@@ -5,7 +5,7 @@
 #' @import dplyr
 #' @export
 
-create_progress_list <-
+join_progress_list <-
         function(identity,
                  key,
                  filter_out_blank_concepts = TRUE) {
@@ -60,5 +60,4 @@ create_progress_list <-
                         }
                 }
                 return(PROGRESS_LIST)
-                
         }
