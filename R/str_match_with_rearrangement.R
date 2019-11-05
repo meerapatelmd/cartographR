@@ -1,0 +1,58 @@
+#' Inverts concepts with a single dash to see if a string match in MRCONSO can occur with a rearrangement, typically with drug combinations with {asdfasd}-{asdfadsf} naming convention
+#' @import stringr
+#' @import dplyr
+#' @import typewriteR
+#' @export
+
+str_match_with_rearrangement <-
+        function(progress_list) {
+                for (i in 1:nrow(progress_list$QUEUE)) {
+                        if (i == 1) {
+                                total_obs <- nrow(progress_list$QUEUE)
+                        }
+                        KEY_CONCEPT_NAME <- progress_list$QUEUE$KEY_CONCEPT_NAME[1]
+                        if (grepl("^.*[-]{1}.*$", KEY_CONCEPT_NAME) == TRUE) {
+                                cat("\n\n")
+                                typewriteR::tell_me(Sys.time(), "Starting row", i, "of", total_obs)
+                                cat("\n")
+                                typewriteR::tell_me(Sys.time(), "Concept:", KEY_CONCEPT_NAME)
+                                cat("\n\n")
+                                
+                                KEY_CONCEPT_NAME <- stringr::str_replace(KEY_CONCEPT_NAME, "(^.*)([-]{1})(.*$)", "\\3-\\1")
+                                first_match <- get_first_possible_cui(KEY_CONCEPT_NAME)
+                                if (nrow(first_match) == 1) {
+                                        progress_list$QUEUE$KEY_CUI[1] <- first_match$CUI
+                                        progress_list$QUEUE$KEY_CUI_MRCONSO_STR[1] <- first_match$STR
+                                        progress_list$QUEUE$KEY_TIMESTAMP[1] <- mirroR::get_timestamp()
+                                        
+                                        progress_list$STAGED <-
+                                                dplyr::bind_rows(progress_list$STAGED,
+                                                                 progress_list$QUEUE %>%
+                                                                         filter(row_number() == 1)
+                                                )
+                                        
+                                        progress_list$QUEUE <- progress_list$QUEUE[-1,]
+                                        assign("PROGRESS_LIST", progress_list, envir = globalenv())
+                                } else {
+                                        progress_list$STAGED <-
+                                                dplyr::bind_rows(progress_list$STAGED,
+                                                                 progress_list$QUEUE %>%
+                                                                         filter(row_number() == 1)
+                                                )
+                                        
+                                        progress_list$QUEUE <- progress_list$QUEUE[-1,]
+                                        assign("PROGRESS_LIST", progress_list, envir = globalenv())
+                                }
+                        } else {
+                                progress_list$STAGED <-
+                                        dplyr::bind_rows(progress_list$STAGED,
+                                                         progress_list$QUEUE %>%
+                                                                 filter(row_number() == 1)
+                                        )
+                                
+                                progress_list$QUEUE <- progress_list$QUEUE[-1,]
+                                assign("PROGRESS_LIST", progress_list, envir = globalenv())
+                        }
+                }
+                
+        }
