@@ -15,7 +15,7 @@ bulk_bucket_denovos <-
                 x <- dataframe[denovo_row_numbers,]
                 x <- x %>%
                         dplyr::mutate(KEY_TIMESTAMP = mirroR::get_timestamp()) %>%
-                        dplyr::mutate(DENOVO_BUCKET = bucket)
+                        dplyr::mutate(DENOVO_BUCKET = bucket) %>%
                         somersaulteR::call_mr_clean()
                 
                 if (!(exists("DENOVO_CUI", envir = globalenv()))) {
