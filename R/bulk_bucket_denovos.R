@@ -14,7 +14,6 @@ bulk_bucket_denovos <-
                 dataframe <- progress_list$PARKED_FOR_DENOVO
                 x <- dataframe[denovo_row_numbers,]
                 x <- x %>%
-                        dplyr::mutate(KEY_DENOVO_CUI_JUSTIFICATION = bulk_denovo_cui_justification) %>%
                         dplyr::mutate(KEY_TIMESTAMP = mirroR::get_timestamp()) %>%
                         dplyr::mutate(DENOVO_BUCKET = bucket)
                         somersaulteR::call_mr_clean()
