@@ -4,14 +4,14 @@
 \alias{bulk_store_new_cui_in_local_key}
 \title{Appends local key with new concept annotation using a dataframe input instead of a single line}
 \usage{
-bulk_store_new_cui_in_local_key(path_to_key_csv, dataframe, key_cui = "",
-  key_cui_mrconso_str = "", key_cui_justification = "",
-  key_cui_flag_for_review = "", key_denovo_cui_justification = "",
-  key_denovo_cui_suggested_definition = "",
-  key_denovo_cui_assigned = "", key_external_followup_flag = "",
-  key_external_followup_request = "",
-  key_external_followup_question = "",
-  key_external_followup_timestamp = "")
+bulk_store_new_cui_in_local_key(path_to_key_csv, dataframe, key_cui = NA,
+  key_cui_mrconso_str = NA, key_cui_justification = NA,
+  key_cui_flag_for_review = NA, key_denovo_cui_justification = NA,
+  key_denovo_cui_suggested_definition = NA,
+  key_denovo_cui_assigned = NA, key_external_followup_flag = NA,
+  key_external_followup_request = NA,
+  key_external_followup_question = NA,
+  key_external_followup_timestamp = NA)
 }
 \arguments{
 \item{dataframe}{dataframe with columns IDENTITY_ID, KEY_FIELD, and KEY_CONCEPT_NAME}
