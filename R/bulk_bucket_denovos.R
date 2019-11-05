@@ -19,7 +19,8 @@ bulk_bucket_denovos <-
                         somersaulteR::call_mr_clean()
                 
                 if (!(exists("DENOVO_CUI", envir = globalenv()))) {
-                        y <- dplyr::bind_rows(progress_list) %>%
+                        y <- lapply(progress_list, somersaulteR::call_mr_clean)
+                        y <- dplyr::bind_rows(y) %>%
                                 dplyr::mutate(DENOVO_BUCKET = "")
                         y <- y[-(1:nrow(x)),]
                         DENOVO_CUI <- dplyr::bind_rows(y,
