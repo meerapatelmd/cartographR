@@ -25,12 +25,12 @@ bulk_flag_rows_for_external_followup <-
                         
                         progress_list$QUEUE <- progress_list$QUEUE[-(row_numbers),]
                         
-                        return(progress_list)
+                        assign("PROGRESS_LIST", progress_list, envir = globalenv())
                         
                 } else {
                         typewriteR::tell_me(crayon::red("Message: the QUEUE is empty."))
                         cat("\n\n")
                         typewriteR::stop_and_enter()
-                        return(progress_list)
+                        assign("PROGRESS_LIST", progress_list, envir = globalenv())
                 }
         }
