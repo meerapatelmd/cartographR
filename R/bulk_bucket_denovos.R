@@ -22,7 +22,7 @@ bulk_bucket_denovos <-
                         y <- lapply(progress_list, somersaulteR::call_mr_clean)
                         y <- dplyr::bind_rows(y) %>%
                                 dplyr::mutate(DENOVO_BUCKET = "")
-                        y <- y[-(1:nrow(x)),]
+                        y <- y[-(1:nrow(y)),]
                         DENOVO_CUI <- dplyr::bind_rows(y,
                                                        x)
                         assign("DENOVO_CUI", DENOVO_CUI, envir = globalenv())
