@@ -7,6 +7,10 @@
 interactive_double_term_search <-
         function(progress_list) {
                 for (i in 1:nrow(progress_list$QUEUE)) {
+                        if (i == 1) {
+                                total_obs <- nrow(progress_list$QUEUE)
+                        }
+                        
                         KEY_CONCEPT_NAME <- progress_list$QUEUE$KEY_CONCEPT_NAME[1]
                         cat("\n\n")
                         typewriteR::tell_me(Sys.time(), "Starting row", i, "of", total_obs)
