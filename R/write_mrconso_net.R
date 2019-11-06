@@ -45,7 +45,7 @@ write_mrconso_net <-
                                         sql_statement <- paste0("SELECT * FROM MRCONSO WHERE STR LIKE '%", phrase_01, "%';") #Not `phrase_02` because the regex will not be compatible with SQL QUERIES
                                         cohort <- mySeagull::get_query("umls", sql_statement)
                                         
-                                        output_fn <- mirroR::create_path_to_file(path_folder = "/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/CATALOGUE/UMLS_MT_MRCONSO/",
+                                        output_fn <- mirroR::create_path_to_file(path_folder = "/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/CATALOGUE/UMLS_MT_MRCONSO/NETS",
                                                                           basename = paste0(keyword_id, "_", phrase_01), #Not `phrase_02` because the regex will not be compatible with output filenames
                                                                           file_extension = "csv")
                                         
