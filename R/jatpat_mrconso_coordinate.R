@@ -24,7 +24,8 @@ jatpat_mrconso_coordinate <-
                 ##Preparing dataframe
                 dataframe <-
                         dataframe %>%
-                        dplyr::select(!!sql_term_col)
+                        dplyr::select(!!sql_term_col) %>%
+                        dplyr::distinct()
                 
                 colnames(dataframe) <- "UMLS_SQL_KEYWORD"
                 ##Anti-joining dataframe to get the values that aren't in the glossary
