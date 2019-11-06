@@ -67,15 +67,20 @@ collect_query_terms <-
                         x <- readline("Please enter the phrases separated by comma to split into single queries: ")
                         x <- stringr::str_trim(unlist(strsplit(x, split = ",")), "both")
                         
-                        data <- list()
-                        for (j in 1:length(x)) {
-                                data[[j]] <-
-                                        input_dataframe %>%
-                                        dplyr::filter(row_number() == i) %>%
-                                        dplyr::mutate(QUERY_TERM = x[j])
+                        if (length(x) != 0) {
+                                data <- list()
+                                for (j in 1:length(x)) {
+                                        data[[j]] <-
+                                                input_dataframe %>%
+                                                dplyr::filter(row_number() == i) %>%
+                                                dplyr::mutate(QUERY_TERM = x[j])
+                                }
+                                output_data[[i]][["SQL_QUERY_TERMS"]] <- dplyr::bind_rows(data) %>%
+                                        dplyr::distinct()
+                        } else {
+                                output_data[[i]][["SQL_QUERY_TERMS"]] <- data.frame()
                         }
-                        output_data[[i]][["SQL_QUERY_TERMS"]] <- dplyr::bind_rows(data) %>%
-                                                                                dplyr::distinct()
+                        
                         
                         ##Save RDS a second time
                         saveRDS(output_data, file = rds_fn)
