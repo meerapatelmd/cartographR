@@ -24,12 +24,9 @@ jatpat_mrconso_coordinate <-
                 ##Preparing dataframe
                 dataframe <-
                         dataframe %>%
-                        dplyr::select(!!sql_term_col) %>%
-                        dplyr::rename(!!sql_term_col := UMLS_SQL_KEYWORD) #%>%
-                        #somersaulteR::add_primary_key(pkey_column_name = "UMLS_SQL_KEYWORD_ID") %>%
-                        #somersaulteR::add_timestamp_column(new_col_name = "UMLS_SQL_KEYWORD_TIMESTAMP") %>%
-                        #dplyr::mutate(UMLS_SQL_KEYWORD_CLASS = "COORDINATE") 
+                        dplyr::select(!!sql_term_col)
                 
+                colnames(dataframe) <- "UMLS_SQL_KEYWORD"
                 ##Anti-joining dataframe to get the values that aren't in the glossary
                 new_terms_df <-
                         dataframe %>%
