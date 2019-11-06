@@ -1,0 +1,58 @@
+#' Writes a MRCONSO NET file if one does not exist for the given phrase
+#' @import dplyr
+#' @import readr
+#' @import mirroR
+#' @import typewriteR
+#' @import projektoR
+#' @import mySeagull
+#' @export
+
+write_mrconso_net <-
+        function(phrase, rm_forward_slash = TRUE) {
+                glossary_fn <- "/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/CATALOGUE/UMLS_MT_MRCONSO/GLOSSARY_UMLS_MT_MRCONSO_QUERY_TERMS.csv"
+                files_list <- list.files("/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/CATALOGUE/UMLS_MT_MRCONSO/NETS", full.names = TRUE)
+                glossary <- readr::read_csv(glossary_fn, col_types = cols(.default = "c"))
+                
+                phrase_00 <- phrase
+                if (rm_forward_slash == TRUE) {
+                        phrase_01 <- stringr::str_remove_all(phrase_00, "[/]")
+                } else {
+                        phrase_01 <- phrase_00
+                }
+                
+                exact_phrase_file_ext <- paste0("[0-9]{12}[_]{1}", phrase_01, "[.]{1}csv$")
+                exact_phrase <- paste0("^", phrase_01, "$")
+                
+                if (!(exact_phrase %in% glossary$UMLS_SQL_KEYWORD)) {
+                                        projektoR::append_csv(glossary_fn,
+                                                              dataframe = data.frame(
+                                                                      UMLS_SQL_KEYWORD_TIMESTAMP = mirroR::get_timestamp(),
+                                                                      UMLS_SQL_KEYWORD_ID = as.character(max(as.double(glossary$UMLS_SQL_KEYWORD_ID)) + 1),
+                                                                      UMLS_SQL_KEYWORD = phrase_01
+                                                              ))
+                                        
+                                        glossary <- readr::read_csv(glossary_fn, col_types = cols(.default = "c"))
+                                        keyword_id <- glossary %>%
+                                                                dplyr::filter(UMLS_SQL_KEYWORD == phrase_01) %>%
+                                                                dplyr::select(UMLS_SQL_KEYWORD_ID) %>%
+                                                                unlist() %>%
+                                                                unname()
+                                        
+                                        
+                                        sql_statement <- paste0("SELECT * FROM MRCONSO WHERE STR LIKE '%", phrase_01, "%';")
+                                        cohort <- mySeagull::get_query("umls", sql_statement)
+                                        
+                                        output_fn <- mirroR::create_path_to_file(path_folder = "/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/CATALOGUE/UMLS_MT_MRCONSO/",
+                                                                          basename = paste0(keyword_id, "_", phrase_01),
+                                                                          file_extension = "csv")
+                                        
+                                        if (!(file.exists(output_fn))) {
+                                                readr::write_csv(cohort, path = output_fn)
+                                        } else {
+                                                typewriteR::tell_me(output_fn, "already exists. Overwrite? ")
+                                                typewriteR::stop_and_enter()
+                                                readr::write_csv(cohort, path = output_fn)
+                                        }
+                }
+        }
+
