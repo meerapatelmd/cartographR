@@ -31,9 +31,14 @@ collect_query_terms <-
                         key_field <- input_dataframe$KEY_FIELD[i]
                         key_concept_name <- input_dataframe$KEY_CONCEPT_NAME[i]
                         
-                        output_data[[i]][["IDENTITY"]] <- cartographR::lookup_native_attributes(identity_id = identity_id,
-                                                                                         key_field = key_field,
-                                                                                         key_concept_name = key_concept_name)
+                        if (key_field != "FIELD_LABEL") {
+                                output_data[[i]][["IDENTITY"]] <- cartographR::lookup_native_attributes(identity_id = identity_id,
+                                                                                                        key_field = key_field,
+                                                                                                        key_concept_name = key_concept_name)
+                        } else {
+                                output_data[[i]][["IDENTITY"]] <- list()
+                        }
+                        
                         
                         ##Saving RDS
                         rds_fn <- paste0(script_step_number, "_", output_data_name, ".RData")
