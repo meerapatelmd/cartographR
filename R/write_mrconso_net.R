@@ -50,12 +50,11 @@ write_mrconso_net <-
                                                                           file_extension = "csv")
                                         
                                         if (!(file.exists(output_fn))) {
-                                                readr::write_csv(cohort, path = output_fn)
-                                        } else {
-                                                typewriteR::tell_me("\t", output_fn, "already exists. Overwrite? ")
+                                                typewriteR::tell_me("\t", Sys.time(), "Starting to write", output_fn, "...")
                                                 cat("\n")
-                                                typewriteR::stop_and_enter()
                                                 readr::write_csv(cohort, path = output_fn)
+                                                typewriteR::tell_me("\t", Sys.time(), "Finished writing", output_fn, "...")
+                                                cat("\n\n\n")
                                         }
                 }
         }
