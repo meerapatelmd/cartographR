@@ -1,15 +1,29 @@
 #' This function takes a column in a dataframe that contains terms to do an exact string match
 #' @param dataframe dataframe that contains a column of search terms
 #' @param sql_term_col variable that contains the single string of search term
+#' @param output_dataframe_name name of r object output that also serves as the bookmark
 #' @import dplyr
 #' @import readr
 #' @import projektoR
 #' @import mySeagull
 #' @import mirroR
+#' @import typewriteR
+#' @import mirCat
 #' @export
 
 jatpat_mrconso_coordinate <-
-        function(dataframe, sql_term_col) {
+        function(dataframe, sql_term_col, output_dataframe_name, script_step_number) {
+                
+                ##Getting bookmark if it exists
+                if (!(exists(output_dataframe_name, envir = globalenv()))) {
+                        output_dataframe <- data.frame()
+                        assign(output_dataframe_name, output_dataframe, envir = globalenv())
+                        start_index <- 1
+                } else {
+                        output_dataframe <- get(output_dataframe_name, envir = globalenv())
+                        start_index <- nrow(output_dataframe)
+                }
+                
                 ##Preparing arugments
                 sql_term_col <- enquo(sql_term_col)
                 
@@ -19,7 +33,7 @@ jatpat_mrconso_coordinate <-
                 
                 ##Filtering glossary for coordinates only
                 coordinate_glossary <- glossary %>%
-                                        dplyr::filter(UMLS_SQL_KEYWORD_CLASS == "COORDINATE")
+                                        dplyr::filter(UMLS_SQL_KEYWORD_CLASS == "coordinate")
                 
                 ##Preparing dataframe
                 dataframe <-
@@ -28,6 +42,7 @@ jatpat_mrconso_coordinate <-
                         dplyr::distinct()
                 
                 colnames(dataframe) <- "UMLS_SQL_KEYWORD"
+                
                 ##Anti-joining dataframe to get the values that aren't in the glossary
                 new_terms_df <-
                         dataframe %>%
@@ -36,8 +51,14 @@ jatpat_mrconso_coordinate <-
                         dplyr::mutate(COORDINATE_STR = "")
                 
                 if (nrow(new_terms_df) > 0) {
-                        for (i in 1:nrow(new_terms_df)) {
+                        for (i in start_index:nrow(new_terms_df)) {
+                                if (i == 1) {
+                                        total_obs <- nrow(new_terms_df)
+                                }
+                                
                                 ##Updating glossary
+                                typewriteR::tell_me(Sys.time(), "Updating glossary with", i, "of", total_obs)
+                                cat("\n")
                                 projektoR::append_csv(glossary_fn,
                                                       dataframe = data.frame(
                                                               UMLS_SQL_KEYWORD_TIMESTAMP = mirroR::get_timestamp(),
@@ -48,6 +69,8 @@ jatpat_mrconso_coordinate <-
                                 
                                 
                                 ##Jatpat
+                                typewriteR::tell_me(Sys.time(), "Querying MRCONSO STR for", new_terms_df$UMLS_SQL_KEYWORD[i])
+                                cat("\n")
                                 mrconso_data <- query_mrconso_data_exact_limit_one(new_terms_df$UMLS_SQL_KEYWORD[i])
                                 if (nrow(mrconso_data) == 1) {
                                         new_terms_df$COORDINATE_CUI[i] <- mrconso_data$CUI
@@ -56,6 +79,22 @@ jatpat_mrconso_coordinate <-
                                         new_terms_df$COORDINATE_CUI[i] <- NA
                                         new_terms_df$COORDINATE_STR[i] <- NA
                                 }
+                                typewriteR::tell_me(Sys.time(), "Finished querying MRCONSO STR for", new_terms_df$UMLS_SQL_KEYWORD[i])
+                                
+                                ##Saving RDS
+                                output_dataframe <- new_terms_df
+                                rds_fn <- paste0(script_step_number, "_", output_dataframe_name, ".RData")
+                                saveRDS(output_dataframe, file = rds_fn)
+                                typewriteR::tell_me(Sys.time(), rds_fn, "saved...")
+                                cat("\n")
+                                
+                                ##Concurrent to saving RDS, assigning robject to global
+                                assign(output_dataframe_name, output_dataframe, envir = globalenv())
+                                typewriteR::tell_me(output_data_name, "R object updated...")
+                                cat("\n")
+                                
+                                cat("\n\n\n")
+                                
                         }
                 }
                 return(new_terms_df)
