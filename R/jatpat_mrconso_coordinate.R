@@ -90,12 +90,11 @@ jatpat_mrconso_coordinate <-
                                 
                                 ##Concurrent to saving RDS, assigning robject to global
                                 assign(output_dataframe_name, output_dataframe, envir = globalenv())
-                                typewriteR::tell_me(output_data_name, "R object updated...")
+                                typewriteR::tell_me(output_dataframe_name, "R object updated...")
                                 cat("\n")
                                 
                                 cat("\n\n\n")
                                 
                         }
                 }
-                return(new_terms_df)
         }
