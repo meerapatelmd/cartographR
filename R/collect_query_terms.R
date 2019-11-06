@@ -16,7 +16,7 @@ collect_query_terms <-
                         start_index <- 1
                 } else {
                         output_data <- get(output_data_name, envir = globalenv())
-                        start_index <- mirCat::list_next(output_data)
+                        start_index <- mirCat::list_last(output_data)
                 }
                 
                 
