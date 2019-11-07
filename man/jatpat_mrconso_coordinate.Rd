@@ -4,12 +4,15 @@
 \alias{jatpat_mrconso_coordinate}
 \title{This function takes a column in a dataframe that contains terms to do an exact string match}
 \usage{
-jatpat_mrconso_coordinate(dataframe, sql_term_col)
+jatpat_mrconso_coordinate(dataframe, sql_term_col, output_dataframe_name,
+  script_step_number)
 }
 \arguments{
 \item{dataframe}{dataframe that contains a column of search terms}
 
 \item{sql_term_col}{variable that contains the single string of search term}
+
+\item{output_dataframe_name}{name of r object output that also serves as the bookmark}
 }
 \description{
 This function takes a column in a dataframe that contains terms to do an exact string match
