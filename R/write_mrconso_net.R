@@ -5,6 +5,7 @@
 #' @import typewriteR
 #' @import projektoR
 #' @import mySeagull
+#' @importFrom crayon bold
 #' @export
 
 write_mrconso_net <-
@@ -50,10 +51,11 @@ write_mrconso_net <-
                                                                           file_extension = "csv")
                                         
                                         if (!(file.exists(output_fn))) {
-                                                typewriteR::tell_me("\t", Sys.time(), "Starting to write", output_fn, "...")
                                                 cat("\n")
+                                                typewriteR::tell_me(crayon::bold("\t\t", "Full File Path:", output_fn))
+                                                typewriteR::tell_me("\t", Sys.time(), "Starting to write csv.")
                                                 readr::write_csv(cohort, path = output_fn)
-                                                typewriteR::tell_me("\t", Sys.time(), "Finished writing", output_fn, "...")
+                                                typewriteR::tell_me("\t", Sys.time(), "Successfully wrote csv.")
                                                 cat("\n\n\n")
                                         }
                 }
