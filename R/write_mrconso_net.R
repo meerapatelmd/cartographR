@@ -25,7 +25,7 @@ write_mrconso_net <-
                 
                 phrase_02 <- paste0("^", phrase_01, "$")
                 
-                if (any(grepl(exact_phrase_file_ext, files_list)) == TRUE) {
+                if (any(grepl(exact_phrase_file_ext, files_list)) == FALSE) {
                                         projektoR::append_csv(glossary_fn,
                                                               dataframe = data.frame(
                                                                       UMLS_SQL_KEYWORD_TIMESTAMP = mirroR::get_timestamp(),
