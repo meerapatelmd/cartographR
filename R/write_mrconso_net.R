@@ -23,7 +23,7 @@ write_mrconso_net <-
                 exact_phrase_file_ext <- paste0("[0-9]{12}[_]{1}", phrase_01, "[.]{1}csv$")
                 
                 
-                        phrase_02 <- paste0("^", phrase_01, "$")
+                phrase_02 <- paste0("^", phrase_01, "$")
                 
                 if (any(grepl(exact_phrase_file_ext, files_list)) == TRUE) {
                                         projektoR::append_csv(glossary_fn,
