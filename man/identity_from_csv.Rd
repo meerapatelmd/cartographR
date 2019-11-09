@@ -4,7 +4,8 @@
 \alias{identity_from_csv}
 \title{Gets IDENTITY data and cleans up based on parameters}
 \usage{
-identity_from_csv(path_to_identity, target_cols, keep_all_cols = FALSE,
+identity_from_csv(path_to_identity, target_cols,
+  redcap_forms_to_exclude = NULL, keep_all_cols = FALSE,
   dont_trimws = FALSE, remove_all = "\\t|\\n",
   include_duplicates = FALSE, log = TRUE)
 }
