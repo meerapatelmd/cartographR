@@ -4,7 +4,8 @@
 \alias{generate_next_id_number}
 \title{Generate next ID number}
 \usage{
-generate_next_id_number(id_vector)
+generate_next_id_number(id_vector,
+  path_to_glossary = "/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/CATALOGUE/UMLS_MT_MRCONSO/GLOSSARY_UMLS_MT_MRCONSO_QUERY_TERMS.csv")
 }
 \arguments{
 \item{id_vector}{vector of id numbers that is already existing. NA values are ignored.}
