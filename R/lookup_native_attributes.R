@@ -25,7 +25,7 @@ lookup_native_attributes <-
                 # typewriteR::stop_and_enter()
                 
                 x <-
-                        readr::read_csv("/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/KEY/IDENTITY.csv", col_types = cols(.default = "c")) %>%
+                        readr::read_csv("/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/KEY/REDCap/IDENTITY.csv", col_types = cols(.default = "c")) %>%
                         dplyr::rename(KMI_PERMISSIBLE_VALUE_LABEL = PERMISSIBLE_VALUE_LABEL) %>%
                         somersaulteR::call_mr_clean() %>%
                         dplyr::select(IDENTITY_ID, unique(relationship_df$FIELD_AS_CONCEPT_02)) %>%
