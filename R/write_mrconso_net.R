@@ -6,6 +6,7 @@
 #' @import projektoR
 #' @import mySeagull
 #' @importFrom crayon bold
+#' @importFrom gmp as.bigz
 #' @export
 
 write_mrconso_net <-
@@ -13,6 +14,8 @@ write_mrconso_net <-
                 glossary_fn <- "/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/CATALOGUE/UMLS_MT_MRCONSO/GLOSSARY_UMLS_MT_MRCONSO_QUERY_TERMS.csv"
                 files_list <- list.files("/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/CATALOGUE/UMLS_MT_MRCONSO/NETS", full.names = TRUE)
                 glossary <- readr::read_csv(glossary_fn, col_types = cols(.default = "c"))
+                
+                new_keyword_id <- generate_next_id_number(glossary$UMLS_SQL_KEYWORD_ID)
                 
                 phrase_00 <- phrase
                 if (rm_forward_slash == TRUE) {
@@ -30,7 +33,7 @@ write_mrconso_net <-
                                         projektoR::append_csv(glossary_fn,
                                                               dataframe = data.frame(
                                                                       UMLS_SQL_KEYWORD_TIMESTAMP = mirroR::get_timestamp(),
-                                                                      UMLS_SQL_KEYWORD_ID = as.character(max(as.double(glossary$UMLS_SQL_KEYWORD_ID)) + 1),
+                                                                      UMLS_SQL_KEYWORD_ID =  new_keyword_id,
                                                                       UMLS_SQL_KEYWORD = phrase_01 #Not `phrase_02` because the regex will not be compatible with SQL QUERIES
                                                               ))
                                         

@@ -1,6 +1,6 @@
 #' Takes IDENTITY and KEY and creates a PROGRESS LIST based on the status of the concept
-#' @param identity output from identity functions
-#' @param key output from key functions
+#' @param identity output from identity_ functions
+#' @param key output from key_ functions
 #' @param filter_out_blank_concepts filters out key_concept_name == ""
 #' @import dplyr
 #' @export

@@ -7,9 +7,9 @@
 join_progress_list(identity, key, filter_out_blank_concepts = TRUE)
 }
 \arguments{
-\item{identity}{output from identity functions}
+\item{identity}{output from identity_ functions}
 
-\item{key}{output from key functions}
+\item{key}{output from key_ functions}
 
 \item{filter_out_blank_concepts}{filters out key_concept_name == ""}
 }
