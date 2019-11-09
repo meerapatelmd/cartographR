@@ -6,5 +6,5 @@
 
 generate_next_id_number <-
         function(id_vector) {
-                max(gmp::as.bigz(glossary %>% filter(!is.na(UMLS_SQL_KEYWORD_ID)) %>% select(UMLS_SQL_KEYWORD_ID) %>% unlist() %>% unname()), na.rm = TRUE) + (sample(1:9, 1))
+                as.character(max(gmp::as.bigz(glossary %>% filter(!is.na(UMLS_SQL_KEYWORD_ID)) %>% select(UMLS_SQL_KEYWORD_ID) %>% unlist() %>% unname()), na.rm = TRUE) + (sample(1:9, 1)))
         }
