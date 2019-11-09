@@ -11,6 +11,9 @@ key_from_csv(path_to_key, log = TRUE)
 
 \item{log}{TRUE if this event will be logged using the log functions from the mirCat package}
 }
+\value{
+dataframe read from path_to_key that is grouped by the IDENTITY_ID, KEY_FIELD, and KEY_CONCEPT_NAME and filtered for the most recent record
+}
 \description{
 Gets KEY data and cleans up based on parameters
 }

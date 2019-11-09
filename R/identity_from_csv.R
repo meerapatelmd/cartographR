@@ -1,5 +1,6 @@
 #' Gets IDENTITY data and cleans up based on parameters
-#' @param path_to_identity exact name of the Google Sheet that has the IDENTITY table. If there are more than 1 Google Sheets with this name, an error will be returned. An "IDENTITY_ID" column is required.
+#' @param path_to_identity path to  the rawidentity csv
+#' @param target_cols vector of the names of the columns that will be melted into the "KEY_FIELD" variable
 #' @param keep_all_cols TRUE if all the variables are wanted in the output. Otherwise, only the target_cols will be selected.
 #' @param include_duplicates TRUE if all the duplicates are desired in the output
 #' @param dont_trimws TRUE if white spaces on both the left and right side are not desired in the output
@@ -9,6 +10,7 @@
 #' @importFrom reshape2 melt
 #' @import dplyr
 #' @import readr
+#' @return dataframe where raw REDCap data dictionary dataframe is processed to a concept level where the target_cols parameter identifies the target columns in the raw data as concepts
 #' @export
 
 identity_from_csv <-

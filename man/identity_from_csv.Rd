@@ -9,7 +9,9 @@ identity_from_csv(path_to_identity, target_cols, keep_all_cols = FALSE,
   include_duplicates = FALSE, log = TRUE)
 }
 \arguments{
-\item{path_to_identity}{exact name of the Google Sheet that has the IDENTITY table. If there are more than 1 Google Sheets with this name, an error will be returned. An "IDENTITY_ID" column is required.}
+\item{path_to_identity}{path to  the rawidentity csv}
+
+\item{target_cols}{vector of the names of the columns that will be melted into the "KEY_FIELD" variable}
 
 \item{keep_all_cols}{TRUE if all the variables are wanted in the output. Otherwise, only the target_cols will be selected.}
 
@@ -18,6 +20,9 @@ identity_from_csv(path_to_identity, target_cols, keep_all_cols = FALSE,
 \item{remove_all}{character string of length 1 representing the string of artifact and other values to be removed from the final output separated by the OR operator}
 
 \item{include_duplicates}{TRUE if all the duplicates are desired in the output}
+}
+\value{
+dataframe where raw REDCap data dictionary dataframe is processed to a concept level where the target_cols parameter identifies the target columns in the raw data as concepts
 }
 \description{
 Gets IDENTITY data and cleans up based on parameters

@@ -1,7 +1,9 @@
 #' Gets KEY data and cleans up based on parameters
 #' @param path_to_key full file path to key csv file
 #' @param log TRUE if this event will be logged using the log functions from the mirCat package
+#' @return dataframe read from path_to_key that is grouped by the IDENTITY_ID, KEY_FIELD, and KEY_CONCEPT_NAME and filtered for the most recent record
 #' @import mirCat
+#' @import stringr
 #' @import somersaulteR
 #' @import dplyr
 #' @import readr
@@ -17,7 +19,7 @@ key_from_csv <-
                 KEY_01 <-
                         KEY_00 %>%
                         dplyr::mutate(KEY_TIMESTAMP = lubridate::ymd_hms(KEY_TIMESTAMP)) %>%
-                        dplyr::mutate(KEY_FIELD = str_replace_all(KEY_FIELD, "^PERMISSIBLE_VALUE_LABEL$", "KMI_PERMISSIBLE_VALUE_LABEL")) %>%
+                        dplyr::mutate(KEY_FIELD = stringr::str_replace_all(KEY_FIELD, "^PERMISSIBLE_VALUE_LABEL$", "KMI_PERMISSIBLE_VALUE_LABEL")) %>%
                         dplyr::group_by(IDENTITY_ID, KEY_FIELD, KEY_CONCEPT_NAME) %>%
                         dplyr::arrange(desc(KEY_TIMESTAMP)) %>%
                         dplyr::filter(row_number() == 1) %>%
