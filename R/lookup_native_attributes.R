@@ -17,7 +17,7 @@ lookup_native_attributes <-
                 TARGET_VAR <- enquo(KEY_FIELD)
                 
                 relationship_df <-
-                                readr::read_csv("/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/KEY/RELATIONSHIP.csv", col_types = cols(.default = "c")) %>%
+                                readr::read_csv("/Users/meerapatel/GitHub/MSK_KMI_Enterprise/TerminologyBiblioTech/KEY/REDCap/RELATIONSHIP.csv", col_types = cols(.default = "c")) %>%
                                 somersaulteR::call_mr_clean() %>%
                                 dplyr::filter_at(vars(FIELD_AS_CONCEPT_01), any_vars(. == KEY_FIELD))
                 
